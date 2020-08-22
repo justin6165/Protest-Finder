@@ -3,6 +3,9 @@ import notification
 import scrapping
 
 
+# pickle.dump(LIST_NAME, open(".dat FILE_NAME", "wb"))
+# pickle.load(open(".dat FILE_NAME", "rb"))
+
 # executes on start-up
 # checks to see if there are reminders for today
 def check_reminders():
@@ -33,4 +36,16 @@ def delete_protest(title):
         if event.title == title:
             events.remove(event)
 
-check_reminders()
+# saves the home address into a .dat file called "user_address.dat"
+# if there already exists a home address. Overwrite the previous address
+def add_home_address(address):
+    if os.path.isfile("user_address.dat") == true:
+        os.remove("user_address.dat")
+        pickle.dump(address, open("user_address.dat", "wb"))
+    else
+        pickle.dump(address, open("user_address.dat", "wb"))
+    pass
+
+# returns the previously saved home address
+def get_home_address():
+    pass

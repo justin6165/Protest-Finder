@@ -40,6 +40,8 @@ def generate_protests_list(location):
 			protest = Protest(protest_title.text.strip(), protest_date.text.strip()[8:], protest_description.text.strip()[:-11], protest_link, protest_image_link)
 
 			protests.append(protest)
+
+
 	return protests
 
-generate_protests_list("Texas")
+generate_protests_list("Minnesota")
