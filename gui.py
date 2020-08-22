@@ -1,4 +1,4 @@
-from scraping import generate_protests_list
+from scrapping import generate_protests_list
 from create_posts import *
 import sys
 
@@ -74,12 +74,17 @@ class Window(QMainWindow):
 
     def generate_search_results(self, location):
         delete_widgets(self.results_layout)  # Remove any posts in search results when generating new results
-        self.results_layout.setAlignment(Qt.AlignLeft)  # Align search results to upper left, not middle like initially set
-
         postings = generate_protests_list(location)  # Web Scraping function that grabs posting information
-        for post in postings:
-            post_box = create_post_layout(post)  # Create a layout for each post
-            self.results_layout.addWidget(post_box)  # Add that layout to the results_layout
+
+        if len(postings) == 0:
+            txt = "We couldn't find any scheduled protests in " + location + "."
+            self.results_layout.addWidget(QLabel(txt))
+        else:
+            for post in postings:
+                post_box = create_post_layout(post)  # Create a layout for each post
+
+                self.results_layout.setAlignment(Qt.AlignLeft)  # Align search results to upper left, not middle like initially set
+                self.results_layout.addWidget(post_box)  # Add that layout to the results_layout
 
 
 if __name__ == "__main__":
