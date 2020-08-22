@@ -2,4 +2,4 @@
 ===========================
 Protest Finder
 
-by Justin Li, Alessandro Snyder, Lam Nguyen, Katie
+by Justin Li, Alessandro Snyder, Lam Nguyen, Katie Park
