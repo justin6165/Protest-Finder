@@ -1,3 +1,4 @@
+import notice_dialog
 import pickle
 import notification
 import scrapping
@@ -28,6 +29,7 @@ def add_protest(protest):
     if not exists:
         events.append(protest)
         pickle.dump(events, open("saved_protests.dat", "wb"))
+        notice_dialog.NoticeDialog("Saved!", False)
 
 # returns a list containing the User's saved protests
 def get_saved_protest_list():
@@ -64,4 +66,4 @@ def get_home_address():
     if check_home_address() is True:
         return pickle.load(open("user_address.dat", "rb"))
     else:
-        return None
+        return ""

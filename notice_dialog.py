@@ -18,7 +18,7 @@ class NoticeDialog(QDialog):
         notice = QLabel(self.message)
         notice.setFont(QFont("Arial", 12))
 
-        ok_btn = QDialogButtonBox.ok
+        ok_btn = QDialogButtonBox.Ok
 
         btn_box = QDialogButtonBox()
         btn_box.addButton(ok_btn)
@@ -31,5 +31,3 @@ class NoticeDialog(QDialog):
         self.setLayout(layout)
         self.exec()
 
-
-NoticeDialog("Yay", True)

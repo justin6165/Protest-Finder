@@ -47,26 +47,33 @@ def create_info_layout(date, descrip):
     return info_layout
 
 
-def create_link_layout(post):
+def create_link_layout(post, saving):
     link_label = QLabel(post.link)
     link_label.setText('<a href="' + post.link + '">' + post.link + '</a>')
     link_label.setOpenExternalLinks(True)
 
-    save_btn = QPushButton("Save protest")
-    save_btn.clicked.connect(lambda: add_protest(post))
-
     link_layout = QFormLayout()
     link_layout.addWidget(link_label)
-    link_layout.addWidget(save_btn)
+    if saving:
+        save_btn = QPushButton("Save protest")
+        save_btn.clicked.connect(lambda: add_protest(post))
+
+        link_layout.addWidget(save_btn)
+    else:
+        remove_btn = QPushButton("Remove protest")
+        remove_btn.clicked.connect(lambda: delete_protest(post.title))
+
+        link_layout.addWidget(remove_btn)
 
     return link_layout
 
 
-def create_post_layout(post):
+def create_post_layout(post, saving):
     title_layout = create_title_layout(post.title)
     img_layout = create_display_layout(post.img)
     info_layout = create_info_layout(post.date, post.description)
-    link_layout = create_link_layout(post)
+    link_layout = create_link_layout(post, saving)
+    
 
     body_layout = QHBoxLayout()
     body_layout.addLayout(img_layout)
@@ -83,4 +90,3 @@ def create_post_layout(post):
     post_box.setLayout(post_layout)
 
     return post_box
-
