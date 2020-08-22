@@ -13,7 +13,7 @@ class Window(QMainWindow):
         self.main_layout()  # Create main layout of app
 
         self.search_layout()  # Layout for searching
-        #self.search_results_layout()
+        # self.search_results_layout()
 
     def main_layout(self):
         widget = QWidget()  # Central widget of the app
@@ -35,7 +35,7 @@ class Window(QMainWindow):
 
         self.top_layout.addLayout(search_layout)
 
-   # def search_results_layout(self):
+    # def search_results_layout(self):
 
 
 if __name__ == "__main__":
@@ -43,41 +43,3 @@ if __name__ == "__main__":
     win = Window()
     win.show()
     sys.exit(app.exec())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
