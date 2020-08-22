@@ -39,13 +39,20 @@ def delete_protest(title):
 # saves the home address into a .dat file called "user_address.dat"
 # if there already exists a home address. Overwrite the previous address
 def add_home_address(address):
-    if os.path.isfile("user_address.dat") == true:
+    if check_home_address() is False:
+        pickle.dump(address, open("user_address.dat", "wb"))
+    else:
         os.remove("user_address.dat")
         pickle.dump(address, open("user_address.dat", "wb"))
-    else
-        pickle.dump(address, open("user_address.dat", "wb"))
-    pass
+
+
+def check_home_address():
+    try:
+        pickle.load(open("user_address.dat", "rb"))
+        return True
+    except:
+        return False
 
 # returns the previously saved home address
 def get_home_address():
-    pass
+    return pickle.load(open("user_address.dat", "rb"))

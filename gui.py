@@ -1,143 +1,20 @@
-<<<<<<< HEAD
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-
 from scrapping import generate_protests_list
-import urllib
-import sys
-
-
-def delete_widgets(layout):
-    """
-    Removes all widgets and layouts in param layout
-    :param layout: A PyQt5 layout; may contain widgets, layouts, or a combination of both
-    :return: No return; eliminates all widgets and layouts in param layout
-    """
-    for i in reversed(range(layout.count())):  # Loop through all objects in layout
-
-        is_widget = isinstance(layout.itemAt(i), QWidgetItem)  # If object is a widget, remove it
-        if is_widget:
-            layout.itemAt(i).widget().setParent(None)
-        else:
-            delete_widgets(layout.itemAt(i))  # If object is not a widget, assume it's a layout and call delete_widgets
-
-
-def get_img(url):
-    """
-    :param url: url of a given any image online
-    :return: A pixmap to be used in a QPixMap object
-    """
-    data = urllib.request.urlopen(url).read()
-
-    img = QImage()
-    img.loadFromData(data)
-
-    return img
-
-
-def create_display_layout(img_link):
-    pix = get_img(img_link)  # This is the image from each protest post
-    pix = pix.scaled(256, 256, QtCore.Qt.KeepAspectRatio)
-    display = QLabel()
-    display.setPixmap(QPixmap(pix))  # Setting a QLabel to display the image
-
-    img_layout = QVBoxLayout()  # This layout will hold the image from each protest post
-    img_layout.setAlignment(Qt.AlignLeft)
-    img_layout.setContentsMargins(0, 0, 0, 0)
-    img_layout.addWidget(display)  # Add in image to layout
-
-    return img_layout
-
-
-def create_title_layout(title):
-    title_label = QLabel(title)
-    title_label.setMaximumWidth(250)
-
-    title_layout = QVBoxLayout()
-    title_layout.addWidget(title_label)
-
-    return title_layout
-
-
-def create_info_layout(date, descrip):
-    info_date = QLabel(date)
-    info_date.setMaximumWidth(250)
-    info_descrip = QLabel(descrip)
-    info_descrip.setMaximumWidth(250)
-    info_descrip.setWordWrap(True)
-
-    info_layout = QVBoxLayout()  # Displays title, date, description, etc, in a vertical format
-    info_layout.addWidget(info_date)
-    info_layout.addWidget(info_descrip)
-
-    return info_layout
-
-
-def create_link_layout(link):
-    link_label = QLabel(link)
-
-    link_layout = QVBoxLayout()
-    link_layout.addWidget(link_label)
-
-    return link_layout
-
-
-def create_post_layout(post):
-    # title, date, descrip, link, img_link = post
-
-    title_layout = create_title_layout(post.title)
-    img_layout = create_display_layout(post.img)
-    info_layout = create_info_layout(post.date, post.description)
-    link_layout = create_link_layout(post.link)
-
-    body_layout = QHBoxLayout()
-    body_layout.addLayout(img_layout)
-    body_layout.addLayout(info_layout)
-
-    post_layout = QVBoxLayout()  # The entire layout post is the image layout with the info layout
-    post_layout.addLayout(title_layout)
-    post_layout.addLayout(body_layout)
-    post_layout.addLayout(link_layout)
-
-    post_box = QGroupBox()
-    post_box.setContentsMargins(0,0,0,0)
-    post_box.setLayout(post_layout)
-
-    return post_box
-
-
-=======
-from scraping import generate_protests_list
 from create_posts import *
 import sys
 
 
->>>>>>> 555d532cb06549fe75e08e267a13b4ac36d70630
 class Window(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
         self.set_window()  # Set window title, max size, etc
 
         self.top_layout = QHBoxLayout()  # This is the top level layout of the entire application
-<<<<<<< HEAD
-        self.main_layout()  # Create main layout of app
-
-        self.search_layout()  # Layout for searching area (left portion of app)
-
-=======
         self.results_layout = QVBoxLayout()  # Layout that will hold all of the search results, i.e. the posts
->>>>>>> 555d532cb06549fe75e08e267a13b4ac36d70630
         self.results_scroll = QScrollArea()  # Scrollable area where the search results are displayed
 
-<<<<<<< HEAD
-        self.results_layout = QVBoxLayout()  # Layout that will hold all of the search results, i.e. the posts
-=======
         self.main_layout()  # Create main layout of app
         self.search_layout()  # Layout for searching area (left portion of app)
         self.set_scrollable()  # Set scrollable attributes
->>>>>>> 555d532cb06549fe75e08e267a13b4ac36d70630
         self.search_results_layout()  # Set up the search results layout
 
     def set_window(self):

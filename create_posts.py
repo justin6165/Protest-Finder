@@ -42,6 +42,9 @@ def create_info_layout(date, descrip):
 def create_link_layout(link):
     link_label = QLabel(link)
 
+    link_label.setText('<a href="' + link + '">' + link + '</a>')
+    link_label.setOpenExternalLinks(True)
+
     link_layout = QVBoxLayout()
     link_layout.addWidget(link_label)
 
