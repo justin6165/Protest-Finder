@@ -36,6 +36,76 @@ def get_img(url):
     return img
 
 
+def create_display_layout(img_link):
+    pix = get_img(img_link)  # This is the image from each protest post
+    pix = pix.scaled(256, 256, QtCore.Qt.KeepAspectRatio)
+    display = QLabel()
+    display.setPixmap(QPixmap(pix))  # Setting a QLabel to display the image
+
+    img_layout = QVBoxLayout()  # This layout will hold the image from each protest post
+    img_layout.setAlignment(Qt.AlignLeft)
+    img_layout.setContentsMargins(0, 0, 0, 0)
+    img_layout.addWidget(display)  # Add in image to layout
+
+    return img_layout
+
+
+def create_title_layout(title):
+    title_label = QLabel(title)
+    title_label.setMaximumWidth(250)
+
+    title_layout = QVBoxLayout()
+    title_layout.addWidget(title_label)
+
+    return title_layout
+
+
+def create_info_layout(date, descrip):
+    info_date = QLabel(date)
+    info_date.setMaximumWidth(250)
+    info_descrip = QLabel(descrip)
+    info_descrip.setMaximumWidth(250)
+    info_descrip.setWordWrap(True)
+
+    info_layout = QVBoxLayout()  # Displays title, date, description, etc, in a vertical format
+    info_layout.addWidget(info_date)
+    info_layout.addWidget(info_descrip)
+
+    return info_layout
+
+
+def create_link_layout(link):
+    link_label = QLabel(link)
+
+    link_layout = QVBoxLayout()
+    link_layout.addWidget(link_label)
+
+    return link_layout
+
+def create_post_layout(post):
+    title, date, descrip, link, img_link = post
+
+    title_layout = create_title_layout(title)
+    img_layout = create_display_layout(img_link)
+    info_layout = create_info_layout(date, descrip)
+    link_layout = create_link_layout(link)
+
+    body_layout = QHBoxLayout()
+    body_layout.addLayout(img_layout)
+    body_layout.addLayout(info_layout)
+
+    post_layout = QVBoxLayout()  # The entire layout post is the image layout with the info layout
+    post_layout.addLayout(title_layout)
+    post_layout.addLayout(body_layout)
+    post_layout.addLayout(link_layout)
+
+    post_box = QGroupBox()
+    post_box.setContentsMargins(0,0,0,0)
+    post_box.setLayout(post_layout)
+
+    return post_box
+
+
 class Window(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
@@ -48,7 +118,6 @@ class Window(QMainWindow):
 
         self.results_layout = QVBoxLayout()  # Layout that will hold all of the search results, i.e. the posts
         # self.results_layout.setAlignment(Qt.AlignLeft)
-
 
         self.results_scroll = QScrollArea()  # Scrollable area where the search results are displayed
         self.set_scrollable()  # Set scrollable attributes
@@ -106,48 +175,8 @@ class Window(QMainWindow):
 
         postings = generate_posting_list(location)  # Web Scraping function that grabs posting information
         for post in postings:
-            post_box = self.create_post_layout(post)  # Create a layout for each post
+            post_box = create_post_layout(post)  # Create a layout for each post
             self.results_layout.addWidget(post_box)  # Add that layout to the results_layout
-
-    def create_post_layout(self, post):
-        title, date, descrip, link, img_link = post
-
-        pix = get_img(img_link)  # This is the image from each protest post
-        pix = pix.scaled(256, 256, QtCore.Qt.KeepAspectRatio)
-        display = QLabel()
-        display.setPixmap(QPixmap(pix))  # Setting a QLabel to display the image
-
-        img_layout = QVBoxLayout()  # This layout will hold the image from each protest post
-        img_layout.setAlignment(Qt.AlignLeft)
-        img_layout.setContentsMargins(0,0,0,0)
-        img_layout.addWidget(display)  # Add in image to layout
-
-        info_title = QLabel(title)  # Title, date, description, and link as labels
-        info_date = QLabel(date)
-        info_descrip = QLabel(descrip)
-        info_link = QLabel(link)
-
-        info_title.setMaximumWidth(250)
-        info_date.setMaximumWidth(250)
-        info_descrip.setMaximumWidth(250)
-        info_descrip.setWordWrap(True)
-        info_link.setMaximumWidth(250)
-
-        info_layout = QVBoxLayout()  # Displays title, date, description, etc, in a vertical format
-        info_layout.addWidget(info_title)
-        info_layout.addWidget(info_date)
-        info_layout.addWidget(info_descrip)
-        info_layout.addWidget(info_link)
-
-        post_layout = QHBoxLayout()  # The entire layout post is the image layout with the info layout
-        post_layout.addLayout(img_layout)
-        post_layout.addLayout(info_layout)
-
-        post_box = QGroupBox()
-        post_box.setContentsMargins(0,0,0,0)
-        post_box.setLayout(post_layout)
-
-        return post_box
 
 
 if __name__ == "__main__":
