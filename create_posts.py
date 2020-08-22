@@ -1,4 +1,5 @@
 from helper import *
+from user_data import *
 
 
 def create_display_layout(img_link):
@@ -46,12 +47,13 @@ def create_info_layout(date, descrip):
     return info_layout
 
 
-def create_link_layout(link):
-    link_label = QLabel(link)
-    link_label.setText('<a href="' + link + '">' + link + '</a>')
+def create_link_layout(post):
+    link_label = QLabel(post.link)
+    link_label.setText('<a href="' + post.link + '">' + post.link + '</a>')
     link_label.setOpenExternalLinks(True)
 
     save_btn = QPushButton("Save protest")
+    save_btn.clicked.connect(lambda: add_protest(post))
 
     link_layout = QFormLayout()
     link_layout.addWidget(link_label)
@@ -64,7 +66,7 @@ def create_post_layout(post):
     title_layout = create_title_layout(post.title)
     img_layout = create_display_layout(post.img)
     info_layout = create_info_layout(post.date, post.description)
-    link_layout = create_link_layout(post.link)
+    link_layout = create_link_layout(post)
 
     body_layout = QHBoxLayout()
     body_layout.addLayout(img_layout)

@@ -1,13 +1,20 @@
 from scrapping import generate_protests_list
+# from notice_dialog import NoticeDialog
 from create_posts import *
 import sys
 
+"""
+1. search minnesota
+2. get results
+3. hit tab saved protests:
+    1. whoosh
+    2. original method of generating postings but pass in list of saved protests
+"""
 
 class Window(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
         self.set_window()  # Set window title, max size, etc
-
         self.top_layout = QHBoxLayout()  # This is the top level layout of the entire application
         self.results_layout = QVBoxLayout()  # Layout that will hold all of the search results, i.e. the posts
         self.results_scroll = QScrollArea()  # Scrollable area where the search results are displayed
@@ -80,9 +87,11 @@ class Window(QMainWindow):
             txt = "We couldn't find any scheduled protests in " + location + "."
             self.results_layout.addWidget(QLabel(txt))
         else:
-            for post in postings:
-                post_box = create_post_layout(post)  # Create a layout for each post
+            self.display_protests(postings)
 
+    def display_protests(self, protest_list):
+        for post in protest_list:
+                post_box = create_post_layout(post)  # Create a layout for each post
                 self.results_layout.setAlignment(Qt.AlignLeft)  # Align search results to upper left, not middle like initially set
                 self.results_layout.addWidget(post_box)  # Add that layout to the results_layout
 

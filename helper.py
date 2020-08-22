@@ -32,3 +32,4 @@ def get_img(url):
     img.loadFromData(data)
 
     return img
+

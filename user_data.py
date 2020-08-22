@@ -18,11 +18,16 @@ def check_reminders():
                 events.remove(event)
 
 # saves protest information into pre-existing list
-def add_protest(title, date, link):
+def add_protest(protest):
+    # check to see if it's already been added
     events = pickle.load(open("saved_protests.dat", "rb"))
-    protest_event = scrapping.Protest(title, date, link)
-    events.append(protest_event)
-    pickle.dump(events, open("saved_protests.dat", "wb"))
+    exists = False
+    for event in events:
+        if protest.title == event.title:
+            exists = True
+    if not exists:
+        events.append(protest)
+        pickle.dump(events, open("saved_protests.dat", "wb"))
 
 # returns a list containing the User's saved protests
 def get_saved_protest_list():
@@ -35,6 +40,7 @@ def delete_protest(title):
     for event in events:
         if event.title == title:
             events.remove(event)
+            return
 
 # saves the home address into a .dat file called "user_address.dat"
 # if there already exists a home address. Overwrite the previous address
