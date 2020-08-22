@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -107,20 +108,36 @@ def create_post_layout(post):
     return post_box
 
 
+=======
+from scraping import generate_protests_list
+from create_posts import *
+import sys
+
+
+>>>>>>> 555d532cb06549fe75e08e267a13b4ac36d70630
 class Window(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
         self.set_window()  # Set window title, max size, etc
 
         self.top_layout = QHBoxLayout()  # This is the top level layout of the entire application
+<<<<<<< HEAD
         self.main_layout()  # Create main layout of app
 
         self.search_layout()  # Layout for searching area (left portion of app)
 
-        self.results_scroll = QScrollArea()  # Scrollable area where the search results are displayed
-        self.set_scrollable()  # Set scrollable attributes
-
+=======
         self.results_layout = QVBoxLayout()  # Layout that will hold all of the search results, i.e. the posts
+>>>>>>> 555d532cb06549fe75e08e267a13b4ac36d70630
+        self.results_scroll = QScrollArea()  # Scrollable area where the search results are displayed
+
+<<<<<<< HEAD
+        self.results_layout = QVBoxLayout()  # Layout that will hold all of the search results, i.e. the posts
+=======
+        self.main_layout()  # Create main layout of app
+        self.search_layout()  # Layout for searching area (left portion of app)
+        self.set_scrollable()  # Set scrollable attributes
+>>>>>>> 555d532cb06549fe75e08e267a13b4ac36d70630
         self.search_results_layout()  # Set up the search results layout
 
     def set_window(self):
@@ -155,6 +172,16 @@ class Window(QMainWindow):
         search_layout.addWidget(search_btn)
         search_btn.pressed.connect(
             lambda: self.generate_search_results(state.text()))  # Pass in data entered in state line edit
+
+        """TEMPORARY, only here to test your code, Katie"""
+        dummy = QPushButton("WOOSH!")
+        search_layout.addWidget(dummy)
+        dummy.pressed.connect(lambda: delete_widgets(self.results_layout))
+
+        katie = QPushButton("Do ur thing Katie!")
+        search_layout.addWidget(katie)
+        # katie.pressed.connect(lambda:) your function goes here
+        """TEMPORARY, only here to test your code, Katie"""
 
         self.top_layout.addLayout(search_layout, 1)  # Add new layout to top lvl layout
 
