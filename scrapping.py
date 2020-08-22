@@ -47,4 +47,3 @@ def generate_protests_list(location):
 
 	return protests
 
-generate_protests_list("sdfds")

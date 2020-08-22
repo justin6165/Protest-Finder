@@ -9,7 +9,6 @@ from datetime import datetime
 today = datetime.today().date()
 today_str = str(datetime.today().date())
 month = today.strftime("%b") #gives shortened ver of month
-
 today_reformatted = month + ' ' + today_str[8:]
 
 
@@ -31,6 +30,5 @@ def check_and_notify(date):
     if check_alert(date) == True:
         send_notification("hi", "henlo")
 
-#test        
-print(check_alert("Sep 33"))
-check_and_notify("Aug 22")
+
+#thank you for the hard carry 
