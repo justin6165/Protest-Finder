@@ -1,7 +1,7 @@
 import pickle
 import notification
 import scrapping
-
+import os
 
 # pickle.dump(LIST_NAME, open(".dat FILE_NAME", "wb"))
 # pickle.load(open(".dat FILE_NAME", "rb"))
@@ -55,4 +55,7 @@ def check_home_address():
 
 # returns the previously saved home address
 def get_home_address():
-    return pickle.load(open("user_address.dat", "rb"))
+    if check_home_address() is True:
+        return pickle.load(open("user_address.dat", "rb"))
+    else:
+        return None
