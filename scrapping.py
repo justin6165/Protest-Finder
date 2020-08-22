@@ -18,10 +18,14 @@ def generate_protests_list(location):
 	protest_html = page.content
 	soup = BeautifulSoup(protest_html, "html.parser")
 
-	results = soup.find(id="content-wrap")
-	protest_elems = results.find_all("article", class_="entry")
-	
 	protests = []
+	results = soup.find(id="content-wrap")
+
+	try:
+		protest_elems = results.find_all("article", class_="entry")
+	except:
+		return protests
+
 	for protest_elem in protest_elems:
 
 		protest_title = protest_elem.find("h2", class_= "entry-title")
@@ -40,6 +44,7 @@ def generate_protests_list(location):
 			protest = Protest(protest_title.text.strip(), protest_date.text.strip()[8:], protest_description.text.strip()[:-11], protest_link, protest_image_link)
 
 			protests.append(protest)
+
 	return protests
 
-generate_protests_list("Texas")
+generate_protests_list("sdfds")
