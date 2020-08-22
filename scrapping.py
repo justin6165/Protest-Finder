@@ -1,8 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 
-# a protest tuple has:
-# (title, date, short description, protest link, image link)
+class Protest:
+	def __init__(self, title, date, description, link, img):
+		self.title = title
+		self.date = date
+		self.description = description
+		self.link = link
+		self.img = img
+
 
 # generates a protests list containing all protests in a certain city/state
 def generate_protests_list(location):
@@ -31,7 +37,9 @@ def generate_protests_list(location):
 				continue
 		
 			protest_link = protest_title.find("a")["href"]
-			protest = protest_title.text.strip(), protest_date.text.strip()[8:], protest_description.text.strip()[:-11], protest_link, protest_image_link
+			protest = Protest(protest_title.text.strip(), protest_date.text.strip()[8:], protest_description.text.strip()[:-11], protest_link, protest_image_link)
 
 			protests.append(protest)
 	return protests
+
+generate_protests_list("Texas")
