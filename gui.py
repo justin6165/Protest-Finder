@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from scrapping import *
+from scraping import generate_protests_list
 import urllib
 import sys
 
@@ -82,13 +82,14 @@ def create_link_layout(link):
 
     return link_layout
 
-def create_post_layout(post):
-    title, date, descrip, link, img_link = post
 
-    title_layout = create_title_layout(title)
-    img_layout = create_display_layout(img_link)
-    info_layout = create_info_layout(date, descrip)
-    link_layout = create_link_layout(link)
+def create_post_layout(post):
+    # title, date, descrip, link, img_link = post
+
+    title_layout = create_title_layout(post.title)
+    img_layout = create_display_layout(post.img)
+    info_layout = create_info_layout(post.date, post.description)
+    link_layout = create_link_layout(post.link)
 
     body_layout = QHBoxLayout()
     body_layout.addLayout(img_layout)
@@ -173,7 +174,7 @@ class Window(QMainWindow):
         delete_widgets(self.results_layout)  # Remove any posts in search results when generating new results
         self.results_layout.setAlignment(Qt.AlignLeft)  # Align search results to upper left, not middle like initially set
 
-        postings = generate_posting_list(location)  # Web Scraping function that grabs posting information
+        postings = generate_protests_list(location)  # Web Scraping function that grabs posting information
         for post in postings:
             post_box = create_post_layout(post)  # Create a layout for each post
             self.results_layout.addWidget(post_box)  # Add that layout to the results_layout
