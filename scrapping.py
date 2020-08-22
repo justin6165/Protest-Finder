@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+# a protest tuple has:
+# (title, date, short description, protest link, image link)
 
 def generate_posting_list(location):
 	URL = "https://rallylist.com/?s=" + location.replace(" ", "+") + "&submit=Search"
@@ -31,6 +33,4 @@ def generate_posting_list(location):
 			protest = protest_title.text.strip(), protest_date.text.strip()[8:], protest_description.text.strip()[:-11], protest_link, protest_image_link
 
 			protests.append(protest)
-			print(protests)
 	return protests
-
