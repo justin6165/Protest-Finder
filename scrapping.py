@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 # a protest tuple has:
 # (title, date, short description, protest link, image link)
 
-def generate_posting_list(location):
+# generates a protests list containing all protests in a certain city/state
+def generate_protests_list(location):
 	URL = "https://rallylist.com/?s=" + location.replace(" ", "+") + "&submit=Search"
 	page = requests.get(URL)
 
