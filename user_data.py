@@ -5,6 +5,7 @@ import notification
 import scrapping
 import os
 import gui
+import sys
 
 
 # pickle.dump(LIST_NAME, open(".dat FILE_NAME", "wb"))
@@ -25,6 +26,8 @@ def check_reminders():
                 notification.send_notification(event.title, event.link)
                 events.remove(event)
                 pickle.dump(events, open("saved_protests.dat", "wb"))
+                os.execl(sys.executable, os.path.abspath(__file__), *sys.argv) 
+
 
 
 def update_protests_list():
@@ -56,6 +59,7 @@ def check_new_protest():
             except:
                 pass
             pickle.dump(protests_list, open("nearby_protests_list.dat", "wb"))
+            os.execl(sys.executable, os.path.abspath(__file__), *sys.argv) 
 
 
 # saves protest information into pre-existing list
