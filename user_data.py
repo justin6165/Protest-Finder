@@ -65,17 +65,13 @@ def add_protest(protest, layout):
     except:
         events = []
         pickle.dump(events, open("saved_protests.dat", "wb"))
-
-    exists = False
+        
     for event in events:
-        if protest.title == event.title:
-            exists = True
+        if protest.title != event.title:
+            events.append(protest)
+            pickle.dump(events, open("saved_protests.dat", "wb"))
+            notice_dialog.NoticeDialog("Saved!", False)
             break
-
-    if not exists:
-        events.append(protest)
-        pickle.dump(events, open("saved_protests.dat", "wb"))
-        notice_dialog.NoticeDialog("Saved!", False)
 
     gui.Window.load_saves(layout)
 
@@ -113,6 +109,7 @@ def add_home_address(address):
         pickle.dump(address, open("user_address.dat", "wb"))
 
     update_protests_list()
+    notice_dialog.NoticeDialog("Saved!", False)
 
 
 def check_home_address():
