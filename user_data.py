@@ -19,11 +19,12 @@ def check_reminders():
         pickle.dump([], open("saved_protests.dat", "wb"))
         return
 
-    if not events:
+    if events:
         for event in events:
             if (notification.check_alert(event.date)):
                 notification.send_notification(event.title, event.link)
                 events.remove(event)
+                pickle.dump(events, open("saved_protests.dat", "wb"))
 
 
 def update_protests_list():
