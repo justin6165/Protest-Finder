@@ -6,7 +6,7 @@ class SetHomeDialog(QDialog):
     def __init__(self, home_address):
         super(QDialog, self).__init__()
 
-        self.setMaximumWidth(300)
+        self.setFixedWidth(600)
         self.setWindowTitle("Set your home address")
 
         prompt = QLabel("Enter your state, then city: ")
