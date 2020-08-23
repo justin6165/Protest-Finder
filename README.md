@@ -22,10 +22,12 @@ If an event that the user has chosen to save is happnening today, the Protest Fi
 
 
 ## Built with
-* Data from [rallylist.com](rallylist.com) - this is where we used web scrapping to get our protest data.
+* [Beautiful Soup](https://pypi.org/project/beautifulsoup4/) - this is what we used to web scrape. 
+* Data from [rallylist.com](rallylist.com) - this is the source from which we retrieved the protest data by web scrapping.
 * [PyQt5](https://pypi.org/project/PyQt5/) - used to build the GUI
 * [Win10Toast](https://pypi.org/project/win10toast/) - used to build the notification on the day of the event
-* add extra stuff that i prob did not include
+* [Pickle](https://github.com/python/cpython/blob/3.8/Lib/pickle.py) - used to saving data onto a .dat file
+* [DateTime](https://docs.python.org/3/library/datetime.html#module-datetime) - used in building the protest notification
 
 ## Purpose
 This Protest Finder was created in light of the events that took place in 2020. After George Floyd's passing, the people of the United States took to the streets to protest against police brutality. Additionally, the presidential election is set to take place in November 2020, and many are rallying to show support for their presidential candidate. Because of this, we decided to create the Protest Finder to help people find out about demonstations and events that may represent their interests near them. 
