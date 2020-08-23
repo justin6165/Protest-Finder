@@ -3,7 +3,7 @@ import user_data
 
 
 class SetHomeDialog(QDialog):
-    def __init__(self):
+    def __init__(self, home_address):
         super(QDialog, self).__init__()
 
         self.setMaximumWidth(300)
@@ -22,7 +22,7 @@ class SetHomeDialog(QDialog):
         btn_box.addButton(ok_btn)
         btn_box.addButton(cancel_btn)
 
-        btn_box.accepted.connect(lambda: user_data.add_home_address(response.text()))
+        btn_box.accepted.connect(lambda: user_data.add_home_address(response.text(), home_address))
         btn_box.rejected.connect(self.reject)
 
         layout = QVBoxLayout()

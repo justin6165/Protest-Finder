@@ -106,13 +106,15 @@ def delete_protest(title, layout):
 
 # saves the home address into a .dat file called "user_address.dat"
 # if there already exists a home address. Overwrite the previous address
-def add_home_address(address):
+def add_home_address(address, home_address):
     if check_home_address() is False:
         pickle.dump(address, open("user_address.dat", "wb"))
     else:
         os.remove("user_address.dat")
         pickle.dump(address, open("user_address.dat", "wb"))
 
+    txt = "Home address: " + address
+    home_address.setText(txt)
     update_protests_list()
 
 

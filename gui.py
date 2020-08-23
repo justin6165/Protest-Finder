@@ -10,6 +10,8 @@ import sys
 class Window(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
+        self.home_address = user_data.get_home_address()
+
         self.set_window()  # Set window title, max size, etc
         self.tool_bar()
 
@@ -33,9 +35,12 @@ class Window(QMainWindow):
         self.create_tabs()
         self.load_saves(self.save_layout)
 
+        # user_data.check_reminders()
+        # user_data.check_new_protest()
+
     def set_window(self):
         self.setWindowTitle("Protest Finder")
-        self.setMinimumWidth(800)
+        self.setMinimumWidth(1200)
         self.setMinimumHeight(800)
 
     def set_scrollable(self, scroll):
@@ -54,17 +59,17 @@ class Window(QMainWindow):
         self.addToolBar(toolbar)
 
         set_home = QPushButton("Set Home Address")
-        set_home.clicked.connect(lambda: self.set_home())
+        set_home.clicked.connect(lambda: self.set_home(self.home_address))
         toolbar.addWidget(set_home)
 
-    def set_home(self):
-        SetHomeDialog()
+    def set_home(self, home_address):
+        SetHomeDialog(home_address)
 
     def search_layout(self):
         search_layout = QFormLayout()
 
-        home_address = QLabel(user_data.get_home_address())
-        search_layout.addRow(home_address)
+        self.home_address = QLabel(user_data.get_home_address())
+        search_layout.addRow(self.home_address)
 
         city = QLineEdit()  # Field for user to enter in city
         city.setMaximumWidth(150)
