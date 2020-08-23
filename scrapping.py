@@ -9,6 +9,15 @@ class Protest:
 		self.link = link
 		self.img = img
 
+	def __hash__(self):
+		return hash(self.title)
+
+	def __eq__(self, other):
+		if self.title == other.title:
+			return True
+		else:
+			return False
+
 
 # generates a protests list containing all protests in a certain city/state
 def generate_protests_list(location):
@@ -30,8 +39,7 @@ def generate_protests_list(location):
 
 		protest_title = protest_elem.find("h2", class_= "entry-title")
 
-		# checks to see if it's a real posting
-		if (protest_title.text.strip() != "Submit" and protest_title.text.strip() != "Rally Alerts"):
+		try:
 			protest_date = protest_elem.find("div", class_="entry-byline-block entry-byline-tags")
 			# this only gives the shortened description. more work needed for extended summary
 			protest_description = protest_elem.find("div", class_="entry-summary")
@@ -44,6 +52,8 @@ def generate_protests_list(location):
 			protest = Protest(protest_title.text.strip(), protest_date.text.strip()[8:], protest_description.text.strip()[:-11], protest_link, protest_image_link)
 
 			protests.append(protest)
+		except:
+			pass
 
 	return protests
 

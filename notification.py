@@ -24,6 +24,11 @@ def send_notification(protest_title, protest_link):
     notif = ToastNotifier()
     notif.show_toast(str(protest_title) + " is today." , "Here is the link to your event: " + str(protest_link))
 
+def protest_nearby_notification(protest_title, protest_link):
+
+    notif = ToastNotifier()
+    notif.show_toast(str(protest_title) , str(protest_link))
+
 
 def check_and_notify(date):
     check_alert(date)

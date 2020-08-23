@@ -1,4 +1,5 @@
 import notice_dialog
+import scrapping
 import pickle
 import notification
 import scrapping
@@ -10,7 +11,11 @@ import os
 # executes on start-up
 # checks to see if there are reminders for today
 def check_reminders():
-    events = pickle.load(open("saved_protests.dat", "rb"))
+    try:
+        events = pickle.load(open("saved_protests.dat", "rb"))
+    except:
+        pickle.dump([], open("saved_protests.dat", "wb"))
+        return
 
     if not events:
         for event in events:
@@ -18,10 +23,44 @@ def check_reminders():
                 notification.send_notification(event.title, event.link)
                 events.remove(event)
 
+def update_protests_list():
+    try:
+        os.remove("nearby_protests_list.dat")
+    except:
+        pass
+    address = get_home_address()
+    if address != "":
+        pickle.dump(scrapping.generate_protests_list(address), open("nearby_protests_list.dat", "wb"))
+
+def get_nearby_protests_list():
+    try:
+        protests = pickle.load(open("nearby_protests_list.dat", "rb"))
+        return protests
+    except:
+        return []
+
+def check_new_protest():
+    original_protests_list = get_nearby_protests_list()
+    if get_home_address() != "" and original_protests_list:
+        protests_list = scrapping.generate_protests_list(get_home_address())
+        if set(protests_list) - set(original_protests_list):
+            notification.protest_nearby_notification("New Protest(s)!", "New protest(s) have appeared in your area!")
+            try:
+                os.remove("nearby_protests_list.dat")
+            except:
+                pass
+            pickle.dump(protests_list, open("nearby_protests_list.dat", "wb"))
+        
+
+
 # saves protest information into pre-existing list
 def add_protest(protest):
     # check to see if it's already been added
-    events = pickle.load(open("saved_protests.dat", "rb"))
+    try:
+        events = pickle.load(open("saved_protests.dat", "rb"))
+    except:
+        events = []
+        pickle.dump(events, open("saved_protests.dat", "wb"))
     exists = False
     for event in events:
         if protest.title == event.title:
@@ -33,15 +72,21 @@ def add_protest(protest):
 
 # returns a list containing the User's saved protests
 def get_saved_protest_list():
-    events = pickle.load(open("saved_protests.dat", "rb"))
-    return events
+    try:
+        events = pickle.load(open("saved_protests.dat", "rb"))
+        return events
+    except:
+        return []
 
 # deletes a protest from the saved protest list given the protest title
 def delete_protest(title):
-    events = pickle.load(open("saved_protests.dat", "rb"))
-    for event in events:
-        if event.title == title:
-            events.remove(event)
+    try:
+        events = pickle.load(open("saved_protests.dat", "rb"))
+    except:
+        return
+    for x in range(len(events)):
+        if events[x].title == title:
+            events.pop(x)
             return
 
 # saves the home address into a .dat file called "user_address.dat"
@@ -52,6 +97,9 @@ def add_home_address(address):
     else:
         os.remove("user_address.dat")
         pickle.dump(address, open("user_address.dat", "wb"))
+
+    update_protests_list()
+
 
 
 def check_home_address():
