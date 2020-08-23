@@ -65,14 +65,13 @@ def add_protest(protest, layout):
     except:
         events = []
         pickle.dump(events, open("saved_protests.dat", "wb"))
-    exists = False
+        
     for event in events:
-        if protest.title == event.title:
-            exists = True
-    if not exists:
-        events.append(protest)
-        pickle.dump(events, open("saved_protests.dat", "wb"))
-        notice_dialog.NoticeDialog("Saved!", False)
+        if protest.title != event.title:
+            events.append(protest)
+            pickle.dump(events, open("saved_protests.dat", "wb"))
+            notice_dialog.NoticeDialog("Saved!", False)
+            break
 
     gui.Window.load_saves(layout)
 
