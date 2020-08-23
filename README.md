@@ -24,7 +24,7 @@ If an event that the user has chosen to save is happnening today, the Protest Fi
 ## Built with
 * [Beautiful Soup](https://pypi.org/project/beautifulsoup4/) - this is what we used to web scrape. 
 * Data from [rallylist.com](rallylist.com) - this is the source from which we retrieved the protest data by web scrapping.
-* [PyQt5](https://pypi.org/project/PyQt5/) - used to build the GUI/
+* [PyQt5](https://pypi.org/project/PyQt5/) - used to build the GUI.
 * [Win10Toast](https://pypi.org/project/win10toast/) - used to build the notification on the day of the event.
 * [Pickle](https://github.com/python/cpython/blob/3.8/Lib/pickle.py) - used to saving data onto a .dat file.
 * [DateTime](https://docs.python.org/3/library/datetime.html#module-datetime) - used in building the protest notification.
