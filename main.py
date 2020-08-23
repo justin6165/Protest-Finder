@@ -1,5 +1,5 @@
 from gui import *
-import user_data
+from user_data import *
 
 
 if __name__ == "__main__":

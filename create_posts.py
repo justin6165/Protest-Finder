@@ -1,5 +1,5 @@
 from helper import *
-from user_data import *
+import user_data
 
 
 def create_display_layout(img_link):
@@ -47,7 +47,7 @@ def create_info_layout(date, descrip):
     return info_layout
 
 
-def create_link_layout(post, saving):
+def create_link_layout(post, saving, layout):
     link_label = QLabel(post.link)
     link_label.setText('<a href="' + post.link + '">' + post.link + '</a>')
     link_label.setOpenExternalLinks(True)
@@ -56,24 +56,23 @@ def create_link_layout(post, saving):
     link_layout.addWidget(link_label)
     if saving:
         save_btn = QPushButton("Save protest")
-        save_btn.clicked.connect(lambda: add_protest(post))
+        save_btn.clicked.connect(lambda: user_data.add_protest(post, layout))
 
         link_layout.addWidget(save_btn)
     else:
         remove_btn = QPushButton("Remove protest")
-        remove_btn.clicked.connect(lambda: delete_protest(post.title))
+        remove_btn.clicked.connect(lambda: user_data.delete_protest(post.title, layout))
 
         link_layout.addWidget(remove_btn)
 
     return link_layout
 
 
-def create_post_layout(post, saving):
+def create_post_layout(post, saving, layout):
     title_layout = create_title_layout(post.title)
     img_layout = create_display_layout(post.img)
     info_layout = create_info_layout(post.date, post.description)
-    link_layout = create_link_layout(post, saving)
-    
+    link_layout = create_link_layout(post, saving, layout)
 
     body_layout = QHBoxLayout()
     body_layout.addLayout(img_layout)
@@ -90,3 +89,4 @@ def create_post_layout(post, saving):
     post_box.setLayout(post_layout)
 
     return post_box
+

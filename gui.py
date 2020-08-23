@@ -1,16 +1,10 @@
 from scrapping import generate_protests_list
-from notice_dialog import NoticeDialog
-from create_posts import *
-from user_data import *
+from notice_dialog import *
+from helper import *
+import create_posts
+import user_data
 import sys
 
-"""
-1. search minnesota
-2. get results
-3. hit tab saved protests:
-    1. whoosh
-    2. original method of generating postings but pass in list of saved protests
-"""
 
 class Window(QMainWindow):
     def __init__(self):
@@ -35,14 +29,14 @@ class Window(QMainWindow):
         self.save_results_layout()
 
         self.create_tabs()
-        self.load_saves()
+        self.load_saves(self.save_layout)
 
     def set_window(self):
         self.setWindowTitle("Protest Finder")
         self.setMinimumWidth(800)
         self.setMinimumHeight(800)
 
-    def set_scrollable(self, scroll):   
+    def set_scrollable(self, scroll):
         scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         scroll.setWidgetResizable(True)
@@ -77,7 +71,7 @@ class Window(QMainWindow):
 
         katie = QPushButton("Do ur thing Katie!")
         search_layout.addWidget(katie)
-        katie.pressed.connect(lambda: self.load_saves()) 
+        # katie.pressed.connect(lambda:) your function goes here
         """TEMPORARY, only here to test your code, Katie"""
 
         self.top_layout.addLayout(search_layout, 1)  # Add new layout to top lvl layout
@@ -90,7 +84,7 @@ class Window(QMainWindow):
         widget.setLayout(self.results_layout)  # Widget is a container for the results layout
 
         self.results_scroll.setWidget(widget)  # Everything in results_layout is placed inside the scrolling area
-        self.top_layout.addWidget(self.results_scroll, 3)  # Scrolling area is added to top level layout
+        # self.top_layout.addWidget(self.results_scroll, 3)  # Scrolling area is added to top level layout
 
     def save_results_layout(self):
         self.save_layout.addWidget(QLabel("You don't have any saved protests"))  # Initial display when there are no search results yet
@@ -108,17 +102,18 @@ class Window(QMainWindow):
             txt = "We couldn't find any scheduled protests in " + location + "."
             self.results_layout.addWidget(QLabel(txt))
         else:
-            self.display_protests(postings, True, self.results_layout)
+            Window.display_protests(postings, True, self.results_layout, self.save_layout)
 
-    def display_protests(self, protest_list, saving, layout):
+    @staticmethod
+    def display_protests(protest_list, saving, layout, save_layout):
         delete_widgets(layout)  # Remove any posts in search results when generating new results
         for post in protest_list:
-            post_box = create_post_layout(post, saving)  # Create a layout for each post
+            post_box = create_posts.create_post_layout(post, saving, save_layout)  # Create a layout for each post
 
             layout.setAlignment(Qt.AlignLeft)  # Align search results to upper left, not middle like initially set
             layout.addWidget(post_box)  # Add that layout to the results_layout
 
-    def create_tabs(self):  
+    def create_tabs(self):
         search_tab = QWidget()
         saves_tab = QWidget()
 
@@ -134,18 +129,19 @@ class Window(QMainWindow):
         saves_tab.setLayout(saves_tab_layout)
 
         self.top_layout.addWidget(self.tabs, 3)
-        
-    def load_saves(self):
-        try:
-            protest_list = get_saved_protest_list()
-            if protest_list:
-                self.display_protests(protest_list, False, self.save_layout)
-            else:
-                NoticeDialog("Nothing is saved", True)
-        except:
-            print("error somewhere")
+
+    @staticmethod
+    def load_saves(save_layout):
+        protest_list = user_data.get_saved_protest_list()
+
+        if protest_list:
+            Window.display_protests(protest_list, False, save_layout, save_layout)
+        elif save_layout.isEmpty():
+            save_layout.addWidget(QLabel("You don't have any saved protests"))
 
 
-
-
-
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = Window()
+    win.show()
+    sys.exit(app.exec())

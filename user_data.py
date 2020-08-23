@@ -4,6 +4,8 @@ import pickle
 import notification
 import scrapping
 import os
+import gui
+
 
 # pickle.dump(LIST_NAME, open(".dat FILE_NAME", "wb"))
 # pickle.load(open(".dat FILE_NAME", "rb"))
@@ -23,6 +25,7 @@ def check_reminders():
                 notification.send_notification(event.title, event.link)
                 events.remove(event)
 
+
 def update_protests_list():
     try:
         os.remove("nearby_protests_list.dat")
@@ -32,12 +35,14 @@ def update_protests_list():
     if address != "":
         pickle.dump(scrapping.generate_protests_list(address), open("nearby_protests_list.dat", "wb"))
 
+
 def get_nearby_protests_list():
     try:
         protests = pickle.load(open("nearby_protests_list.dat", "rb"))
         return protests
     except:
         return []
+
 
 def check_new_protest():
     original_protests_list = get_nearby_protests_list()
@@ -50,11 +55,10 @@ def check_new_protest():
             except:
                 pass
             pickle.dump(protests_list, open("nearby_protests_list.dat", "wb"))
-        
 
 
 # saves protest information into pre-existing list
-def add_protest(protest):
+def add_protest(protest, layout):
     # check to see if it's already been added
     try:
         events = pickle.load(open("saved_protests.dat", "rb"))
@@ -70,6 +74,9 @@ def add_protest(protest):
         pickle.dump(events, open("saved_protests.dat", "wb"))
         notice_dialog.NoticeDialog("Saved!", False)
 
+    gui.Window.load_saves(layout)
+
+
 # returns a list containing the User's saved protests
 def get_saved_protest_list():
     try:
@@ -78,16 +85,20 @@ def get_saved_protest_list():
     except:
         return []
 
+
 # deletes a protest from the saved protest list given the protest title
-def delete_protest(title):
-    try:
-        events = pickle.load(open("saved_protests.dat", "rb"))
-    except:
-        return
+def delete_protest(title, layout):
+
+    events = pickle.load(open("saved_protests.dat", "rb"))
     for x in range(len(events)):
         if events[x].title == title:
+            print("found it")
             events.pop(x)
-            return
+            pickle.dump(events, open("saved_protests.dat", "wb"))
+            print("Success")
+            break
+    gui.Window.load_saves(layout)
+
 
 # saves the home address into a .dat file called "user_address.dat"
 # if there already exists a home address. Overwrite the previous address
@@ -101,13 +112,13 @@ def add_home_address(address):
     update_protests_list()
 
 
-
 def check_home_address():
     try:
         pickle.load(open("user_address.dat", "rb"))
         return True
     except:
         return False
+
 
 # returns the previously saved home address
 def get_home_address():
