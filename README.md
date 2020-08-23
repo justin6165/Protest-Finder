@@ -18,7 +18,7 @@ It will also include a link which leads to the posting of this event from [rally
 If the user is interested in following a certain event, they can save it into a predesignated list. The user can also see a list of saved protests by clicking on the 'Saves' tab in the program.
 
 ### Remind user
-If an event that the user has chosen to save is happnening today, the Protest Finder will send a notification in the system tray. The notification will also include the link to the posting in order to help the user review information such as the location and time of the protest.
+If an event that the user has chosen to save is happening today, the Protest Finder will send a notification in the system tray. The notification will also include the link to the posting in order to help the user review information such as the location and time of the protest.
 
 
 ## Built with
