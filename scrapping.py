@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 class Protest:
 	def __init__(self, title, date, description, link, img):
 		self.title = title

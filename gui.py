@@ -1,5 +1,6 @@
 from scrapping import generate_protests_list
 from notice_dialog import *
+from set_home_dialog import *
 from helper import *
 import create_posts
 import user_data
@@ -10,6 +11,7 @@ class Window(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
         self.set_window()  # Set window title, max size, etc
+        self.tool_bar()
 
         self.top_layout = QHBoxLayout()  # This is the top level layout of the entire application
         self.results_layout = QVBoxLayout()  # Layout that will hold all of the search results, i.e. the posts
@@ -47,8 +49,22 @@ class Window(QMainWindow):
 
         self.setCentralWidget(widget)  # Display widget as central widget to be displayed
 
+    def tool_bar(self):
+        toolbar = QToolBar()
+        self.addToolBar(toolbar)
+
+        set_home = QPushButton("Set Home Address")
+        set_home.clicked.connect(lambda: self.set_home())
+        toolbar.addWidget(set_home)
+
+    def set_home(self):
+        SetHomeDialog()
+
     def search_layout(self):
         search_layout = QFormLayout()
+
+        home_address = QLabel(user_data.get_home_address())
+        search_layout.addRow(home_address)
 
         city = QLineEdit()  # Field for user to enter in city
         city.setMaximumWidth(150)
@@ -62,22 +78,15 @@ class Window(QMainWindow):
         search_btn.setMaximumWidth(150)
         search_layout.addWidget(search_btn)
         search_btn.pressed.connect(
-            lambda: self.generate_search_results(state.text()))  # Pass in data entered in state line edit
-
-        """TEMPORARY, only here to test your code, Katie"""
-        dummy = QPushButton("WOOSH!")
-        search_layout.addWidget(dummy)
-        dummy.pressed.connect(lambda: delete_widgets(self.results_layout))
-
-        katie = QPushButton("Do ur thing Katie!")
-        search_layout.addWidget(katie)
-        # katie.pressed.connect(lambda:) your function goes here
-        """TEMPORARY, only here to test your code, Katie"""
+            lambda: self.generate_search_results(state.text() + ", " + city.text()))  # Pass in data entered in state line edit
 
         self.top_layout.addLayout(search_layout, 1)  # Add new layout to top lvl layout
 
     def search_results_layout(self):
-        self.results_layout.addWidget(QLabel("Nothing to see here yet"))  # Initial display when there are no search results yet
+        label = QLabel("Nothing to see here yet")
+        label.setFont(QFont("Arial", 18))
+
+        self.results_layout.addWidget(label)  # Initial display when there are no search results yet
         self.results_layout.setAlignment(Qt.AlignCenter)
 
         widget = QWidget()
@@ -87,7 +96,10 @@ class Window(QMainWindow):
         # self.top_layout.addWidget(self.results_scroll, 3)  # Scrolling area is added to top level layout
 
     def save_results_layout(self):
-        self.save_layout.addWidget(QLabel("You don't have any saved protests"))  # Initial display when there are no search results yet
+        label = QLabel("You don't have any saved protests")
+        label.setFont(QFont("Arial", 18))
+
+        self.save_layout.addWidget(label)  # Initial display when there are no search results yet
         self.save_layout.setAlignment(Qt.AlignCenter)
 
         widget = QWidget()
@@ -99,8 +111,14 @@ class Window(QMainWindow):
         postings = generate_protests_list(location)  # Web Scraping function that grabs posting information
 
         if len(postings) == 0:
+            delete_widgets(self.results_layout)
+
             txt = "We couldn't find any scheduled protests in " + location + "."
-            self.results_layout.addWidget(QLabel(txt))
+            label = QLabel(txt)
+            label.setFont(QFont("Arial", 16))
+
+            self.results_layout.addWidget(label)
+            self.results_layout.setAlignment(Qt.AlignCenter)
         else:
             Window.display_protests(postings, True, self.results_layout, self.save_layout)
 
@@ -133,11 +151,17 @@ class Window(QMainWindow):
     @staticmethod
     def load_saves(save_layout):
         protest_list = user_data.get_saved_protest_list()
+        print(protest_list)
 
         if protest_list:
             Window.display_protests(protest_list, False, save_layout, save_layout)
-        elif save_layout.isEmpty():
-            save_layout.addWidget(QLabel("You don't have any saved protests"))
+        else:
+            delete_widgets(save_layout)
+            save_layout.setAlignment(Qt.AlignCenter)
+
+            label = QLabel("You don't have any saved protests")
+            label.setFont(QFont("Arial", 16))
+            save_layout.addWidget(label)
 
 
 if __name__ == "__main__":

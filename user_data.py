@@ -123,6 +123,6 @@ def check_home_address():
 # returns the previously saved home address
 def get_home_address():
     if check_home_address() is True:
-        return pickle.load(open("user_address.dat", "rb"))
+        return "Home Address: " + pickle.load(open("user_address.dat", "rb"))
     else:
-        return ""
+        return "No home address set"
