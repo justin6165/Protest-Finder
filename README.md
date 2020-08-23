@@ -1,13 +1,9 @@
-2020 Hack For The People
+2020 Hack For The People - Protest finder Application
 ===========================
-Protest Finder
-
-by Justin Li, Alessandro Snyder, Lam Nguyen, Katie Park
-
-This project is a Python based application that helps the user find protests and rallies based on their location. This is a submission for the 2020 Hack For The People Hackathon taking place from 08/21/2020 to 08/23/2020, under the Political category.
-
+This project is a Python based application that helps the user find protests and rallies based on their location. This is a submission for the 2020 Hack For The People Hackathon taking place from 08/21/2020 to 08/23/2020, under the Political category. See below for information on setting things up, the different functionalities of the program, what the program was built with, and who contributed to the project!
 
 ## Set up
+Currently, in order to set up the application, you must download all of the python files in the repository above and must have their dependencies installed (i.e, you must pip install PyQt5, for example. See the "Built With" section to see all of the dependency libraries needed). Afterwards, you must have python installed and then you simply just run "main.py." In the future, we plan on packaging the python files into an executable for users to use. Through an executable, you won't have to install the dependency libraries or python directly; downloading the executable would be all that you need!
 
 ## Program Capabilities
 ### Search for protests and rallies
@@ -34,4 +30,10 @@ If an event that the user has chosen to save is happening today, the Protest Fin
 
 ## Purpose
 This Protest Finder was created in light of the events that took place in 2020. After George Floyd's passing, the people of the United States took to the streets to protest against police brutality. Additionally, the presidential election is set to take place in November 2020, and many are rallying to show support for their presidential candidate. Because of this, we decided to create the Protest Finder to help people find out about demonstations and events that may represent their interests near them. 
+
+## Contributors
+* Justin Li
+* Alessandro Snyder 
+* Lam Nguyen 
+* Katie Park
 
