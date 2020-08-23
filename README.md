@@ -14,8 +14,8 @@ This project is a Python based application that helps the user find protests and
 The Protest Finder is able to look for protests based on what the user puts into the search bar. The user can narrow down their options by typing in city names or state names. After clicking Search, if the Protest Finder has found events happening in the specified location, it will generate a list containing the name and date of the event, a short description, as well as the event's poster.
 It will also include a link which leads to the posting of this event from [rallylist.com](rallylist.com).
 
-### Save protests
-If the user is interested in following a certain event, they can save it into a predesignated list. The user can also see a list of saved protests by clicking on the Saves tab in the program.
+### Save protests postings
+If the user is interested in following a certain event, they can save it into a predesignated list. The user can also see a list of saved protests by clicking on the 'Saves' tab in the program.
 
 ### Remind user
 If an event that the user has chosen to save is happnening today, the Protest Finder will send a notification in the system tray. The notification will also include the link to the posting in order to help the user review information such as the location and time of the protest.
