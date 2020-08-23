@@ -110,6 +110,7 @@ def add_home_address(address):
         pickle.dump(address, open("user_address.dat", "wb"))
 
     update_protests_list()
+    notice_dialog.NoticeDialog("Saved!", False)
 
 
 def check_home_address():
