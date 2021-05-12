@@ -9,7 +9,7 @@ Currently, in order to set up the application, you must download all of the pyth
 ### Search for protests and rallies
 The Protest Finder is able to look for protests based on what the user puts into the search bar. The user can narrow down their options by typing in city names or state names. After clicking Search, if the Protest Finder has found events happening in the specified location, it will generate a list containing the name and date of the event, a short description, as well as the event's poster.
 
-It will also include a link which leads to the posting of this event from [rallylist.com](rallylist.com).
+It will also include a link which leads to the posting of this event from [rallylis.com](rallylist.com).
 
 ![](https://user-images.githubusercontent.com/46146906/90983252-52e3ae80-e532-11ea-99ed-277b05265a89.png)
 
